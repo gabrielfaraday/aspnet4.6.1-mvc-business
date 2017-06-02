@@ -1,0 +1,63 @@
+﻿@using MvcAppExample.Web.Helpers;
+@model MvcAppExample.Business.ViewModels.ContatoViewModel
+
+@{
+    ViewBag.Title = "Detalhes do Contato";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+    </dl>
+    @if (Model.Telefones.Any())
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    Telefone
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.Telefones)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DDD)  @Html.DisplayFor(modelItem => item.Numero)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Remover", "RemoverFone", new { id = item.TelefoneId }).IfClaimHelper("ModuloContato", "TRmv")
+                    </td>
+                </tr>
+            }
+
+        </table>
+    }
+    else
+    {
+        <p> Nenhum telefone cadastrado.</p>
+    }
+</div>
+<p>
+    @Html.ActionLink("Alterar", "Edit", new { id = Model.ContatoId }) |
+    @Html.ActionLink("Novo Telefone", "NovoFone", new { id = Model.ContatoId }).IfClaimHelper("ModuloContato", "TInc") |
+    @Html.ActionLink("Voltar", "Index")
+</p>

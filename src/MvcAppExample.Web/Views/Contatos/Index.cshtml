@@ -1,0 +1,43 @@
+﻿@using MvcAppExample.Web.Helpers;
+@model IEnumerable<MvcAppExample.Business.ViewModels.ContatoViewModel>
+
+@{
+    ViewBag.Title = "Contatos";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@{ 
+    if (this.IfClaim("ModuloContato", "CInc"))
+    {
+        <p>@Html.ActionLink("Novo Contato", "Create")</p>
+    }
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.ActionLink("Telefones", "Details", new { id = item.ContatoId }).IfClaimHelper("ModuloContato", "TLst") |
+            @Html.ActionLink("Alterar", "Edit", new { id=item.ContatoId }).IfClaimHelper("ModuloContato", "CEdt") |
+            @Html.ActionLink("Remover", "Delete", new { id=item.ContatoId }).IfClaimHelper("ModuloContato", "CRmv")
+        </td>
+    </tr>
+}
+
+</table>
